@@ -1,4 +1,5 @@
-﻿namespace KelThuzad.Pets{
+﻿#pragma warning disable
+namespace KelThuzad.Pets{
     /*[HarmonyPatch(typeof(Modding),"CheckForMods")]
     public class Bigglesworth{
         [HarmonyPostfix]
