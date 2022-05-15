@@ -63,13 +63,14 @@ global using Assets.Scripts.Models.Towers.Pets;
 global using Assets.Scripts.Simulation.Towers.Pets;
 global using Assets.Scripts.Simulation.Towers;
 [assembly:MelonGame("Ninja Kiwi","BloonsTD6")]
-[assembly:MelonInfo(typeof(KelThuzad.KelThuzadMain),"KelThuzad","1.0","Silentstorm#5336")]
+[assembly:MelonInfo(typeof(KelThuzad.KelThuzadMain),"KelThuzad","1.0.1","Silentstorm#5336")]
 namespace KelThuzad{
     public class KelThuzadMain:BloonsTD6Mod{
         /*public override void OnApplicationQuit(){
             if(Maps.XelNagaTemple.InGameUpdate_Patch.areatowrite.Count!=0)Log("\n"+string.Join("\n",Maps.XelNagaTemple.InGameUpdate_Patch.areatowrite));
             if(Maps.XelNagaTemple.InGameUpdate_Patch.pathtowrite.Count!=0)Log("\n"+string.Join("\n",Maps.XelNagaTemple.InGameUpdate_Patch.pathtowrite));
         }*/
+        public override string GithubReleaseURL=>"https://api.github.com/repos/Onixiya/KelThuzad/releases";
         public static void Log(object thingtolog,string type="msg"){
             switch(type){
                 case"msg":
@@ -243,8 +244,12 @@ namespace KelThuzad{
         public class CreateSoundOnSelected_Patch{
             [HarmonyPostfix]
             public static void Postfix(TowerSelectionMenu __instance){
+                string towername="";
                 TowerModel towerModel=__instance.selectedTower.tower.towerModel;
-                if(TowerBundles.ContainsKey(towerModel.name.Split('-')[1])){
+                try{
+                    towername=towerModel.name.Split('-')[1];
+                }catch{}
+                if(TowerBundles.ContainsKey(towername)){
                     string sound=null;
                     if(towerModel.HasBehavior<HeroModel>()){
                         sound=towerModel.GetBehavior<CreateSoundOnSelectedModel>().sound1.assetId+new System.Random().Next(1,7);
@@ -252,14 +257,14 @@ namespace KelThuzad{
                             sound=towerModel.GetBehavior<CreateSoundOnSelectedModel>().sound1.assetId+new System.Random().Next(1,7);
                         }
                         LastSoundPlayed=sound;
-                        AudioFactoryInstance.PlaySoundFromUnity(null,sound,"FX",1,1);
+                        Game.instance.audioFactory.PlaySoundFromUnity(null,sound,"FX",1,1);
                     }else{
                         sound=towerModel.GetBehavior<CreateSoundOnSelectedModel>().sound1.assetId+new System.Random().Next(1,5);
                         while(sound==LastSoundPlayed){
                             sound=towerModel.GetBehavior<CreateSoundOnSelectedModel>().sound1.assetId+new System.Random().Next(1,5);
                         }
                         LastSoundPlayed=sound;
-                        AudioFactoryInstance.PlaySoundFromUnity(null,sound,"FX",1,1);
+                        Game.instance.audioFactory.PlaySoundFromUnity(null,sound,"FX",1,1);
                     }
                 }
             }
