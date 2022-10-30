@@ -84,7 +84,7 @@ namespace KelThuzad{
                     break;
             }
         }
-        public override void OnApplicationStart(){
+        /*public override void OnApplicationStart(){
             List<string>BlacklistedModNames=new List<string>(){"monkeymoney","monkeyknowledge","trophy","unlock","monkey-knowledge","monkey-money","monkey money","monkey knowledge"};
             List<string>BlacklistedModAuthors=new List<string>(){"kenx00x","maliciousfiles","mr.nuke","turkey","true north coding / elite modding","elite modding","true north coding"};
             bool quit=false;
@@ -97,7 +97,7 @@ namespace KelThuzad{
             if(quit){
                 Application.Quit(0);
             }
-        }
+        }*/
         public static void SetSounds(TowerModel towerModel,string asset){
             towerModel.GetBehavior<CreateSoundOnUpgradeModel>().sound.assetId=asset+"-upgrade";
             towerModel.RemoveBehavior<CreateSoundOnSelectedModel>();
